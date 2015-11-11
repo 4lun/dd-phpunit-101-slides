@@ -1,105 +1,220 @@
 <!doctype html>
 <html lang="en">
+<head>
+	<meta charset="utf-8">
 
-	<head>
-		<meta charset="utf-8">
+	<title>Laravel Testing 101</title>
 
-		<title>PHPUnit 101</title>
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css" id="theme">
+	<link href='//fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+	<style>
+	/* DD Colours */
+		body {
+			background: #202020;
+			font-family: Lato, sans-serif;
+			font-weight: 300;
+		}
+		.reveal p {
+			font-weight: 300;
+			line-height: 1.4;
+			color: #ccc;
+			font-size: 0.8em;
+		}
+		.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+			font-family: Lato, sans-serif;
+			font-weight: 300;
+			text-transform: none;
+		}
+		.reveal a, .reveal a:hover, .reveal a:focus {
+			color: #fff;
+			text-decoration: underline;
+		}
+		.reveal .progress span {
+			background: #10a6b3;
+		}
+		.reveal .controls div.navigate-left, .reveal .controls div.navigate-left.enabled {
+		  border-right-color: #10a6b3; }
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
-		<link href='//fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
-		<style>
-		/* DD Colours */
-			body {
-				background: #202020;
-				font-family: Lato, sans-serif;
-				font-weight: 300;
-			}
-			.reveal p {
-				font-weight: 300;
-				line-height: 1.4;
-				color: #ccc;
-				font-size: 0.8em;
-			}
-			.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
-				font-family: Lato, sans-serif;
-				font-weight: 300;
-				text-transform: none;
-			}
-			.reveal a, .reveal a:hover, .reveal a:focus {
-				color: #fff;
-				text-decoration: underline;
-			}
-			.reveal .progress span {
-				background: #10a6b3;
-			}
-			.reveal .controls div.navigate-left, .reveal .controls div.navigate-left.enabled {
-			  border-right-color: #10a6b3; }
+		.reveal .controls div.navigate-right, .reveal .controls div.navigate-right.enabled {
+		  border-left-color: #10a6b3; }
 
-			.reveal .controls div.navigate-right, .reveal .controls div.navigate-right.enabled {
-			  border-left-color: #10a6b3; }
+		.reveal .controls div.navigate-up, .reveal .controls div.navigate-up.enabled {
+		  border-bottom-color: #10a6b3; }
 
-			.reveal .controls div.navigate-up, .reveal .controls div.navigate-up.enabled {
-			  border-bottom-color: #10a6b3; }
+		.reveal .controls div.navigate-down, .reveal .controls div.navigate-down.enabled {
+		  border-top-color: #10a6b3; }
 
-			.reveal .controls div.navigate-down, .reveal .controls div.navigate-down.enabled {
-			  border-top-color: #10a6b3; }
+		.reveal .controls div.navigate-left.enabled:hover {
+		  border-right-color: #10a6b3; }
 
-			.reveal .controls div.navigate-left.enabled:hover {
-			  border-right-color: #10a6b3; }
+		.reveal .controls div.navigate-right.enabled:hover {
+		  border-left-color: #10a6b3; }
 
-			.reveal .controls div.navigate-right.enabled:hover {
-			  border-left-color: #10a6b3; }
+		.reveal .controls div.navigate-up.enabled:hover {
+		  border-bottom-color: #10a6b3; }
 
-			.reveal .controls div.navigate-up.enabled:hover {
-			  border-bottom-color: #10a6b3; }
+		.reveal .controls div.navigate-down.enabled:hover {
+		  border-top-color: #10a6b3; }
+	</style>
 
-			.reveal .controls div.navigate-down.enabled:hover {
-			  border-top-color: #10a6b3; }
-		</style>
+	<!-- Code syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/monokai_sublime.css">
 
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/monokai_sublime.css">
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement( 'link' );
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+	<!--[if lt IE 9]>
+	<script src="lib/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+<body>
 
-	<body>
+	<div class="reveal">
 
-		<div class="reveal">
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+			<section data-background="#10a6b3">
+				<h1>Laravel Testing 101</h1>
+				<h3>Digital Detox - Show &amp; Tell 11/2015</h3>
+			</section>
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section data-background="#10a6b3">
-					<h1>PHPUnit 101</h1>
-					<h3>Digital Detox - Show &amp; Tell 11/2015</h3>
-				</section>
+			<section>
+				<h2>PHPUnit</h2>
 
-				<section>
-					<h2>PHPUnit</h2>
+				<p>Out of the box Laravel includes PHPUnit, The framework also adds some convenient helper methods "allowing you to expressively test your applications".</p>
+			</section>
 
-					</ul>
-				</section>
+			<section>
+				<h2>Benefits of implementing tests</h2>
+				<ul>
+					<li class="fragment">Assurance the application functions correctly</li>
+					<li class="fragment">Pinpoint cause when issues arise</li>
+					<li class="fragment">Confidence when refactoring</li>
+				</ul>
+
+				<p></p>
+			</section>
+
+			<section>
+				<h2>Basic Test</h2>
+
+				<p>In your tests directory, you define tests within classes and any method that starts with the name `test` is considered a test.</p>
+
+				<pre><code contenteditable data-trim>
+class ExampleTest extends TestCase
+{
+	public function testExample()
+	{
+		$this->assertTrue(true);
+	}
+}
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>Testing HTTP response</h2>
+
+				<p>In your tests directory, you define tests within classes and any method that starts with the name `test` is considered a test.</p>
+
+				<pre><code contenteditable data-trim>
+class StatusTest extends TestCase
+{
+	public function testHomepage()
+	{
+		$this->visit('/');
+		$this->assertResponseStatus(200);
+	}
+}
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>Test page for the presence of a string</h2>
+
+				<p>In your tests directory, you define tests within classes and any method that starts with the name `test` is considered a test.</p>
+
+				<pre><code contenteditable data-trim>
+class ContentTest extends TestCase
+{
+    public function testHomepage()
+    {
+        $this->visit('/')
+            ->see('Laravel')
+            ->dontSee('Rails');
+    }
+}
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>Unit tests</h2>
+
+<pre><code contenteditable data-trim>
+class BasicClassTest extends TestCase
+{
+    public function testHello()
+    {
+        $message = (new BasicClass())->hello('Alex');
+
+        $this->assertEquals('Hello Alex', $message);
+    }
+}
+</code></pre>
+			</section>
+
+			<section>
+				<h2>Functional tests</h2>
+				<p>(Sometimes also known as integration tests)</p>
+<pre><code contenteditable data-trim>
+class UserLoginTest extends TestCase
+{
+    public function testInvalidUserLogin()
+    {
+        $this->visit(route('auth.login'))
+            ->type('johnsmith@.', 'email')
+            ->type('short', 'password')
+            ->press('Login')
+            ->seePageIs(route('auth.login'))
+            ->see(trans('auth.failed'));
+    }
+}
+</code></pre>
+			</section>
+
+			<section>
+				<h2>TDD - Test Driven Development</h2>
+				<ul>
+					<li class="fragment">First the developer writes an (initially failing) automated test case that defines a desired improvement or new function</li>
+					<li class="fragment">then produces the minimum amount of code to pass that test</li>
+					<li class="fragment">and finally refactors the new code to acceptable standards</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Testing with databases</h2>
+				<p>In many cases your code has a dependency on a database.</p>
+			<div class="fragment">
+			<br>
+				<h3>DB Transactions</h3>
+				<p>Out of the box Laravel includes a trait that will allow you to wrap all your tests in DB transactions, stopping any DB changes created by the tests from persisting.</p>
+			</div>
+			</section>
 
 			<section>
 				<h1>Questions?</h1>
