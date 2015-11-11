@@ -1,5 +1,5 @@
-# Laravel 101
-Digital Detox - Show &amp; Tell 10/2015
+# PHPUnit 101
+Digital Detox - Show &amp; Tell 11/2015
 
 Built using [reveal.js](https://github.com/hakimel/reveal.js/)
 
